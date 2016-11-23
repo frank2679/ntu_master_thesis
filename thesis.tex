@@ -7,16 +7,17 @@
 \usepackage{graphicx}
 \usepackage{array}
 \usepackage{wallpaper} 
+\usepackage{amsmath}
 
 % Using the tex-text mapping for ligatures etc.
 \defaultfontfeatures{Mapping=tex-text}
 
 % Set the default fonts
-\setmainfont{Times New Roman}
-\setCJKmainfont{標楷體}
+\setmainfont{times.ttf}
+\setCJKmainfont{kaiu.ttf}
 
 \ifdefined\withwatermark
-  \CenterWallPaper{0.174}{watermark.pdf}
+  \CenterWallPaper{0.174}{./watermark.pdf}
   \setlength{\wpXoffset}{6.1725cm}
   \setlength{\wpYoffset}{10.5225cm}
 \fi
@@ -25,6 +26,7 @@
 \input{ntuvars}
 
 \begin{document}
+\AddToShipoutPictureBG{\put(\LenToUnit{.325\paperwidth},\LenToUnit{.35\paperheight}){\includegraphics[scale=1]{watermark.pdf}}}
 
 \frontmatter
 
@@ -42,7 +44,11 @@
 \mainmatter
 
 % Your thesis goes here
-\input{introduction}
+\input{1_introduction}
+\input{2_ax-features}
+\input{3_system-model}
+\input{4_performance-valuation}
+\input{5_conclusion}
 %\input{related}
 %\input{photoshoot}
 %\input{modeling}
