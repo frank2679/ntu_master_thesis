@@ -90,7 +90,7 @@ Above all, when AP allocates RUs for random access, the AP will sense channels f
 \label{fig_n_M_ns}
 \end{figure}
 
-\subsection{Initial Contention Window $OCW_{min}$, backoff level $m$}
+\subsection{Initial and max Contention Window $OCW_{min}, OCW_{max}$}
 Different from legacy 802.11, the backoff level and initial contention window are allocated as a RAPS element in beacon frame by AP in real time according to the system state, especially number of stations in a BSS.
 With the $M$ being determined as large as possible, we need an adaptive tuning of backoff level and initial contention window so that transmission probability approaches optimal value.
 Since $\tau$ is determined by solving equations \ref{tau_general} and \ref{p_ax}, it is hard to give a equation of $\tau$ determined by system parameters $m$ and $W_0$.
@@ -115,6 +115,7 @@ It is validated by the case $m=3, W_0 = 31$ in figure \ref{fig_n_eff} that when 
 
 
 \begin{figure}[!ht]
+\centering
 \includegraphics[scale=.54]{./figure/n_tau_perf.png}
 \caption{Transmission probability versus number of stations}
 \label{fig_n_tau}
@@ -129,19 +130,22 @@ Let's take two extreme examples. With smaller $m$ and $OCW_{min}$, performance i
 While with larger $m$ and $OCW_{min}$, performance is pretty at large $n$ but much worse for small $n$.
 To obtain best performance for $n>M$, we propose to adaptively tune the parameter sets $\lbrace m, OCW_{min}\rbrace$ with large $m$ and small $OCW_{min}$ together with $M$ as large as possible. 
 
-\begin{figure}[!ht]
-\includegraphics[scale=.54]{./figure/n_eff_perf.png}
-\caption{System efficiency versus number of stations}
-\label{fig_n_eff}
-\end{figure}
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{\textwidth}  
+  \centering  
+  \includegraphics[scale=0.64]{./figure/n_eff_perf.png}  
+    \caption{System efficiency versus number of stations}   
+    \label{fig_n_eff}
+\end{subfigure}   
 
-
-\begin{figure}[!ht]
-\includegraphics[scale=.54]{./figure/n_delay_perf.png}
+\begin{subfigure}{\textwidth}
+\includegraphics[scale=.64]{./figure/n_delay_perf.png}
 \caption{Access delay versus number of stations}
 \label{fig_n_delay}
+\end{subfigure}
+\caption{Configuring M, number of RUs for random access}
 \end{figure}
-
 
 
 

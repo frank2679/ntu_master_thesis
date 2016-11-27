@@ -1,9 +1,16 @@
 \chapter{Introduction}
 \label{c:intro}
 
-%1. why 802.11ax, dense, DCF, contention, collision
+\section{Legacy 802.11}
 During last decades, IEEE 802.11 achieved great success in WLAN. Enormous WiFi are deployed for its high speed and simplicity of deployment. 
-The foundation of 802.11 MAC, distributed coordination function (DCF), is a random access mechanism \cite{bianchi2000performance}.
+The foundation of 802.11 MAC, distributed coordination function (DCF), is a random access mechanism \cite{bianchi2000performance}. 
+
+\subsection{Distributed Coordination Function (DCF)}
+
+
+\subsection{Defect of Legacy 802.11}
+%1. why 802.11ax, dense, DCF, contention, collision
+
 With DCF, a random access MAC, the star topology of a 802.11 WLAN result in a absolutely unfair queueing. 
 Since in star topology,  access point (AP) needs to transmit all the down-link (DL) traffic, which is often more than $1/2$ traffic loading of the basic service set (BSS), while AP has only $1/n$ chance to access medium where $n$ is number of total stations including AP. It is, thus, an unfair queueing problem.
 What's worse, combining effect of the unstability of random access's nature and the unfair queueing problem, once under a dense scenario, the performance will degrade severely since contention and collision will occupy the channel.
@@ -19,6 +26,11 @@ Confronting the dense deployment problem, 802.11ax permits AP of central control
 IEEE 802.11ax also issues multi-user (MU) PHY which is supported with Orthogonal Frequency Multiple Access (OFDMA), and a special control frame called trigger frame (TF) to implement trigger-based MU UL\cite{draft_ax}. %\cite{dengquality}
 Accordingly, multi-channel random access, the focus of this paper, is of course implemented in 802.11ax, named OFDMA-based random access, since random access is an efficient way for stations to transmit bandwidth request, buffer status report (BSR) etc. 
 Actually, the new MAC is based on DCF since it helps co-exist among BSS and other systems. The difference is that the DCF mainly works on AP which means AP needs to access channel following DCF procedure, while HE-STA (802.11ax STA) is mostly scheduled by AP and even the random access procedure is initialized by AP. 
+
+
+\section{Related Work}
+
+
 
 %3. related work, random acces history ? , clarify OFDMA-based random access is special
 % SU/MU; aloha/CSMA; BEB/UB; saturated/unsaturated
@@ -48,6 +60,7 @@ Simulation validates our model to be accurate.
 Then, we estimate the maximum system efficiency and minimum access delay. 
 Since OFDMA-based random access has dynamic and more complicated parameter sets than legacy 802.11, we evaluate effect of a variety of parameter sets and at last propose rules for AP to configure the parameter set. 
 
+\section{Orgnization}
 The paper is organized as follows.
 More explanations of 802.11ax features are given in section \ref{sec_ax_feature}. 
 In section \ref{sec_RA_illu}, a detailed illustration of OFDMA-based random access procedure is presented.

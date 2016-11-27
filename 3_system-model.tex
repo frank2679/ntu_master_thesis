@@ -21,7 +21,7 @@ $m$						& maximum backoff level \\
 $p$						& packet collision probability \\
 $\tau$					& station's transmission probability \\
 $n_s$					& $\#$ of successful stations in a stage \\
-$N_{s\_station}$			& $\#$ of stages for a station to succeed in contending \\
+$D$			            & access delay, $\#$ of stages for a station \\ & to succeed in contending \\
 $N_{s\_stage}$			& $\#$ of stages until a successful stage \\
 \hline
 \end{tabular}
@@ -42,7 +42,8 @@ Since states $\lbrace i,0\sim M \rbrace$ all means station could access RU, we c
 The model is based on the assumption that at each request transmission, and regardless of the number of retransmission suffered, each request frame collides with constant and independent probability $p$.
 
 \begin{figure*}[!t]
-\includegraphics[scale=.45]{./figure/Markov_chain.png}
+    \centering
+\includegraphics[scale=.45]{./figure/chp3/Markov_chain.png}
 \caption{Markov Chain model for the backoff window size}
 \label{Markov}
 \end{figure*}
@@ -90,7 +91,7 @@ Then,
 \end{align}
 
 From equation \ref{biT}, we have $\sum_{i=0}^m b_{i,T}= \frac{b_{0,T}}{1-p}$; sum the equation \ref{steady_prob} respectively, we obtain equation \ref{part_sum}.  
-\begin{figure*}[!b]
+
 \begin{align}
 \begin{cases}
 \sum_{k=M+1}^{W_0} b_{0,k} = \frac{b_{0,T}}{W_0+1}\left(-\frac{M}{2}\left\lfloor \frac{W_0}{M}\right\rfloor ^2 + \left(W_0-\frac{M}{2}\right)\left\lfloor \frac{W_0}{M} \right\rfloor \right) \\[8pt]
@@ -99,16 +100,13 @@ From equation \ref{biT}, we have $\sum_{i=0}^m b_{i,T}= \frac{b_{0,T}}{1-p}$; su
 \end{cases}
 \label{part_sum}
 \end{align}
-\end{figure*}
 
 Let $X_i = -\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\frac{M}{2}\right)\left\lfloor \frac{W_i}{M} \right\rfloor$. Then we sum all the states to have equation \ref{total_sum2}.
-\begin{figure*}[!b]
 \begin{align}
 1 &= \sum_{i=0}^m \sum_{k=0}^{W_i}b_{i,k} 
  = \frac{b_{0,T}}{W_0+1}\left( X_0 + \sum_{i=1}^{m-1}X_i\left( \frac{p}{2}\right)^i + X_m\frac{\left( \frac{p}{2}\right)^m}{1-p}\right) + \frac{b_{0,T}}{1-p}\label{total_sum}\\
 & = b_{0,T}\left( \frac{(1-p)X_0+(1-p) \sum_{i=1}^{m-1}X_i\left( \frac{p}{2}\right)^i+X_m\left( \frac{p}{2}\right)^m+W_0+1}{(W_0+1)(1-p)}\right)\label{total_sum2}
 \end{align}
-\end{figure*}
 
 We can now express $\tau$, the probability of a station transmit a request at a randomly selected stage.
 
@@ -150,7 +148,7 @@ With the transmit probability, we could easily estimate efficiency of random acc
 Firstly, find expected number of stations who succeed in contending to transmit request at a stage, which is denoted with $E[n_s]$. 
 Extending $n_s$, we define a system efficiency as an important metric.
 Secondly, we are interested in the access delay of request frame. 
-In another word, say how many stages needed for a station to succeed in contending, denoted by $N_{s\_station}$.
+In another word, say how many stages needed for a station to succeed in contending, denoted by $D$.
 What's more, another interesting metric is how many stages are elapsed until a successful stage, which means at least one station succeed in contending in the stage. This metric is a concept similar to "delay" in the second use case of OFDMA-based random access. We represent it with $N_{s\_stage}$. It helps design whole MU UL transmission procedure. 
 Here, our concern is mainly on first two metrics which are purely related to random access procedure. The third metric is only expressed in the subsection of access delay, not being discussed later. 
 
@@ -178,11 +176,11 @@ With all these metrics, we could evaluate the performance later.
 
 	
 \subsection{Access Delay}
-$N_{s\_station}$, the random variable of how many stages are needed for a station to succeed in contending in a stage follows geometric distribution with parameter $P_{s\_station}$, which is obtained just now.  
+$D$, the random variable of how many stages are needed for a station to succeed in contending in a stage follows geometric distribution with parameter $P_{s\_station}$, which is obtained just now.  
 Then the expected value of access delay of request frame, $E[D]$, is 
 \begin{align}
 \label{equ_delay}
-E[D] = E[N_{s\_station}] = \frac{1}{\tau (1-\frac{\tau}{M})^{n-1}}.
+E[D] = \frac{1}{P_{s\_{station}}} = \frac{1}{\tau (1-\frac{\tau}{M})^{n-1}}.
 \end{align}
 
 Then another interesting metric which is not our focus, denoted by $N_{s\_stage}$, that how many stages are elapsed until a successful stage. 
@@ -199,13 +197,13 @@ E[N_{s\_stage}] &= \frac{1}{P_{s\_stage}}  \nonumber \\
 			&= \frac{1}{1-(1-\tau(1-p))^n}
 \end{align} 
 
-In a word, we focus on three metrics: number of successful stations in a stage by $n_s$, system efficiency by $E[n_s]/M$ and access delay given by $N_{s\_station}$. 
-Actually, only two variables are concerned, $n_s$ and $N_{s\_station}$. However, $n_s$ and its normalized value are both meaningful, which we will explain in following sections.
+In a word, we focus on three metrics: number of successful stations in a stage by $n_s$, system efficiency by $E[n_s]/M$ and access delay given by $D$. 
+Actually, only two variables are concerned, $n_s$ and $D$. However, $n_s$ and its normalized value are both meaningful, which we will explain in following sections.
 
 
 \section{Model Validation} 		\label{sec_model_val}
 To validate the Markov chain model, we run a simulation using C language according to the settings of 802.11ax random access illustration. 
-We run the simulation with variety of parameter sets $\lbrace M, m, OCW_{min}\rbrace$ and collects the information of the two variables, $n_s$ and $N_{s\_station}$. 
+We run the simulation with variety of parameter sets $\lbrace M, m, OCW_{min}\rbrace$ and collects the information of the two variables, $n_s$ and $D$. 
 The validation is given in both figure \ref{validation} and table \ref{table_val}. 
 The results show that the Markov model precisely predict the behavior of the OFDMA-based random access.
 \begin{table}[!h]
@@ -233,7 +231,8 @@ $n=20$	& 6.06432	& 6.06323 \\
 \end{table}
 
 \begin{figure}[!h]
-\includegraphics[scale=0.54]{./figure/multiple_parameter.png}
+    \centering
+\includegraphics[scale=0.74]{./figure/chp3/multiple_parameter.png}
 \caption{System efficiency: Analysis versus Simulation}
 \label{validation}
 \end{figure}

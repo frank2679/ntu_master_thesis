@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 臺灣大學碩博士論文 XeLaTeX 模版
 ==========
 
@@ -35,3 +36,6 @@ Changelog
     * The first release
 
 [Tz-Huan Huang](http://www.csie.ntu.edu.tw/~tzhuan)
+=======
+# ntu_master_thesis
+>>>>>>> 956706a1de888db11c955e4d3d2fabb2d18ae482

@@ -19,21 +19,21 @@ It is worth mentioning that every transmission of MU should end at the same time
 Actually, MU PHY has been implemented in 802.11n and 802.11ac with MU-MIMO, which is an absolutely different method from OFDMA and beyond the scope of this paper. 
 
 \begin{figure}[!t]
-\includegraphics[scale=0.25]{./figure/RU_spec.png}
+\includegraphics[scale=0.25]{./figure/chp2/RU_spec.png}
 \caption{Maximum number of RUs for each channel width}
 \label{fig_RU_spec}
 \end{figure}
 
 
 \begin{figure}[!t]
-\includegraphics[scale=0.4]{./figure/fig_MU_DL.png}
+\includegraphics[scale=0.4]{./figure/chp2/fig_MU_DL.png}
 \caption{MU DL of 802.11ax}
 \label{fig_MU_DL}
 \end{figure}
 
 
 \begin{figure}[!t]
-\includegraphics[scale=0.36]{./figure/fig_MU_UL.png}
+\includegraphics[scale=0.36]{./figure/chp2/fig_MU_UL.png}
 \caption{Trigger-based MU UL of 802.11ax}
 \label{fig_MU_UL}
 \end{figure}
@@ -49,7 +49,8 @@ In this way, stations is able to access channel with the scheduled RU contained 
 The trigger frame format is as in figure \ref{fig_TF_format}. Since the standard is in progress, many fields remain to be determined (TBD). 
 
 \begin{figure}[!ht]
-\includegraphics[scale=0.2]{./figure/fig_tf_format.png}
+\centering
+\includegraphics[scale=0.3]{./figure/chp2/fig_tf_format.png}
 \caption{Trigger Frame format}
 \label{fig_TF_format}
 \end{figure}
@@ -62,10 +63,10 @@ What's more, to support scheduling of TF, a mechanism called \textit{Target Wake
 
 
 \section{802.11ax Random Access Illustration}		\label{sec_RA_illu}
-\begin{figure*}[!hb]
+\begin{figure*}[!t]
 %\begin{minipage}{.5\textwidth}
 \centering
-\includegraphics[scale=0.35]{./figure/RA_illu.png}
+\includegraphics[scale=0.35]{./figure/chp2/RA_illu.png}
 \caption{Illustration of OFDMA-based random access}
 \label{fig_ra_illu}
 %\end{minipage}
@@ -78,9 +79,9 @@ What's more, to support scheduling of TF, a mechanism called \textit{Target Wake
 %\end{minipage}
 
 
-\begin{figure*}[!hb]
+\begin{figure*}[!t]
 \centering
-\includegraphics[scale=0.35]{./figure/RA_illu_2.png}
+\includegraphics[scale=0.35]{./figure/chp2/RA_illu_2.png}
 \caption{An example of OFDMA-based random access for UL in 802.11ax }
 \label{fig_ra_ul}
 \end{figure*}
@@ -129,7 +130,8 @@ Similar to legacy 802.11 power save, HE-STA needs to transmit PS-poll or APSD-tr
 The transmission of PS-poll or APSD-trigger frame is a good case of OFDMA-based random access. After successful contention, AP will transmit the buffered packets of the HE-STA.
 
 \begin{figure}[!h]
-\includegraphics[scale=0.3]{./figure/RAPS.png}
+\centering
+\includegraphics[scale=0.4]{./figure/chp2/RAPS.png}
 \caption{Random Access Parameter Set (RAPS) Element}
 \label{fig_RAPS}
 \end{figure}
