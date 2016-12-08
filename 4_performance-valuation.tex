@@ -89,14 +89,14 @@ In figure \ref{fig_n_M_delay}, the larger $M$ will linearly decrease the access 
 
 More practically, we present the number of successful stations in a single stage versus number of stations in figure \ref{fig_n_M_ns}.
 While the maximum system efficiency is the same with different $M$, the actually number of stations who succeed contending in a single stage is much different, which corresponds to equation \ref{equ_max_ns}. 
-The optimal value of number of successful stations in a single stage is propotional to $M$. 
+The optimal value of number of successful stations in a single stage is proportional to $M$. 
 Above all, when AP allocates RUs for random access, the AP will sense channels first then allocates as many RUs, which are sensed idle, for random access as possible.
 
 
 
 \subsection{Initial and max Contention Window $(OCW_{min}, OCW_{max})$}
 \label{contend_window}
-Different from legacy 802.11 where backoff mechanism is preconfigured in hardware of stations, the initial and maximum contention window $(OCW_{min}, OCW_{max})$ are allocated in beacon frame sent by AP. 
+Different from legacy 802.11 where backoff mechanism is pre-set in hardware of stations, the initial and maximum contention window $(OCW_{min}, OCW_{max})$ are allocated in beacon frame sent by AP. 
 Thus, the configuration of backoff mechanism becomes dynamic, which means that it could be configured according to the scenario, especially the number of stations.
 With the $M$ being determined as large as possible, it is more complicated algorithm to adaptive tune $OCW_{min}, OCW_{max}$ so that transmission probability approaches optimal value.
 Since $\tau$ is determined by solving equations \ref{tau_general} and \ref{p_ax}, it is hard to give a expression of $\tau$ determined by system parameters $W_0$ and $W_m$.

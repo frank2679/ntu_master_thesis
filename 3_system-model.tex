@@ -1,7 +1,7 @@
 \chapter{System Model} 		\label{chp_sys_model}
 One of main contribution of this paper is the analytical evaluation of the saturation analysis of 802.11ax OFDMA-based random access, in the assumption of ideal channel conditions (i.e., no hidden terminals and capture). 
 The Markov chain model of random access was first proposed by Bianchi for analyzing distributed coordination function\cite{bianchi2000performance}. 
-Here, for the brand new ODFMA-based random access, we generate a new Markov chain model. 
+Here, for the brand new OFDMA-based random access, we generate a new Markov chain model. 
 In this analysis, we generate three metrics, $n_s$ number of stations who succeed in contending in a stage, eff self-defined system efficiency, and $D$ access delay of request frame. 
 
 The analysis is divided into two parts. First is the Markov chain model to estimate the packet transmission probability $\tau$ and conditional collision probability $p$. 
@@ -9,7 +9,7 @@ Secondly, we express the three metrics as function of $\tau$.
 Table \ref{table_notation} is a list of all parameters and notations.
 
 Before generating Markov Chain model, we need to clarify concept of time in this mechanism.
-The OFDMA-based random access is a three-way handshake procedure, AP initiating a TF, followed with STAs' sending request, then AP reponding the request with ACK.
+The OFDMA-based random access is a three-way handshake procedure, AP initiating a TF, followed with STAs' sending request, then AP responding the request with ACK.
 The whole procedure is so-called "stage".
 Actually, we have known that in legacy 802.11 DCF, time is measured in slot, which is a unit of time.
 Here, time is measured in stage, which is a discrete time and is not synchronized with physical time. 
@@ -36,7 +36,7 @@ $M$ represents the number of RU for random access in a stage.
 Let $b(t)$ be the stochastic process representing the backoff time counter for a given station.
 A discrete and integer time scale is adopted: $t$ and $t+1$ correspond to the beginning of two consecutive stage times, and the backoff time counter of each station decrements at the beginning of each stage.
 Note that this discrete time scale does not directly relates to the physical time.
-In fact, as illustrated in figure \ref{fig_ra_time}, time interval between two consective stages is variable.
+In fact, as illustrated in figure \ref{fig_ra_time}, time interval between two consecutive stages is variable.
 And since the OFDMA-based random access in MU PHY is kind of Aloha random access, the backoff counter will only be frozen outside the stage period. 
 The request packet is contained in a stage, thus the time interval between two stages is just a stage, which is absolutely different with Bianchi's model.
 In Bianchi's model of DCF, the time interval between two slot time beginnings may be much longer than the slot time size, as it may include a packet transmission. 
@@ -47,9 +47,9 @@ However, define convenience $W_0=OCW_{min}$.
 Let $m$, "maximum backoff level", be the value such that $OCW_{max}=2^mW_0$, and let's adopt the notation $W_i$, the OFDMA contention window (OCW) at $i^{th}$ backoff level, with relationship $W_i = 2W_{i-1}+1$, where $i\in (0,m)$ is called "backoff level".
 Let $s(t)$ be the stochastic process representing the backoff level $(0,...,m)$ of the station at time $t$.
 
-The key approximation in our model is that, at each transmission attempt, and regardless of the number of retransmissions suffered, each packet collides with constant and independent probability $p$. It is intuitive that this assumption results more accurate as long as $W_0$ and $n$ get larger. $p$ will be referred to as "conditional collision probility", meaning that this is the probability of a collision seen by a packet being transmitted on the channel.
+The key approximation in our model is that, at each transmission attempt, and regardless of the number of retransmissions suffered, each packet collides with constant and independent probability $p$. It is intuitive that this assumption results more accurate as long as $W_0$ and $n$ get larger. $p$ will be referred to as "conditional collision probability", meaning that this is the probability of a collision seen by a packet being transmitted on the channel.
 
-Once independence is assumed, and $p$ is supposed to be a constant value, the bidimensional process $\lbrace s(t),b(t) \rbrace$ could be modeled with Markov chain as in figure\ref{Markov}. 
+Once independence is assumed, and $p$ is supposed to be a constant value, the bi-dimensional process $\lbrace s(t),b(t) \rbrace$ could be modeled with Markov chain as in figure\ref{Markov}. 
 There mainly two differences compared with Bianchi's Markov chain.
 Firstly, since states $( i,0\sim M )$ all means station could access RU, we could merge these states into one state, denoted by $( i, T )$. 
 Secondly, at beginning of each stage, the backoff counter will decrease the value of $M$, instead of $1$, which is depicted in chapter \ref{chp_ax_feature}.
@@ -212,7 +212,7 @@ With all these metrics, we could evaluate the performance later.
 	
 \subsection{Access Delay}
 Access delay $D$ is defined as number of stages needed for a station to succeed in contending.  
-This access delay is different from legacy access delay since the concept of time here is not corresponding with phsical time.
+This access delay is different from legacy access delay since the concept of time here is not corresponding with physical time.
 We measure the time as number of stages.
 Access delay $D$ follows geometric distribution with parameter $P_{s\_station}$, which is obtained just now.
 Thus the expected value of access delay of request frame, $E[D]$, is 

@@ -90,7 +90,7 @@ As stated above, legacy IEEE 802.11 MAC is a 20 MHz SU PHY, which means that at 
 With the MU PHY, HE-STA (802.11ax, high efficient station) has multiple RUs to access, which means multiple HE-STAs may access channel at the same time.
 And the parameter set is set by AP in real time.
 The procedure is of course more complicated and flexible.
-We first illustrate the ODFMA-based random access procedure then give two use cases of the random access.
+We first illustrate the OFDMA-based random access procedure then give two use cases of the random access.
 
 Different from legacy 802.11, all the parameters are configured by AP, not predefined at hardware. 
 The parameter set is composed of $OCW_{min}, OCW_{max}, M$. $OCW_{min}$, (i.e., OFDMA contention window), represents the minimum contention window, while $OCW_{max}$ represents the maximum contention window. 
@@ -104,7 +104,7 @@ HE-STA needs maintain a backoff counter, called OFDMA Backoff (OBO).
 HE-STAs who want to access channel will randomly generate a OBO among range $[0, OCW_i]$, where $i$ is the backoff level. 
 Then the OBO subtracts the value of number of RUs for random access in the current stage. 
 If the OBO reaches 0, the HE-STA will randomly select a RU from those for random access to transmit a packet after SIFS (short inter-frame spacing). 
-After that AP responds with a block ack indicating who succeed in transmitting a request. The whole three-way handshaking is called a stage. 
+After that AP responds with a block ACK indicating who succeed in transmitting a request. The whole three-way handshaking is called a stage. 
 It is worth reminding that the stage in this paper is a concept of interval, not the backoff stage in other papers. 
 It is specified from standard \cite{draft_ax}. To distinguish the two words, we use backoff level replacing backoff stage. 
 Those whose OBO is greater than 0 will freeze the OBO and wait for next stage.  

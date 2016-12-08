@@ -3,10 +3,10 @@ During last decades, IEEE 802.11 achieved great success in WLAN. Enormous WiFi a
 However, problems arise with more and more dense deployment of WiFi.
 Though the throughput of WiFi has increased to x Gbit/s, the quality of experience (QoE) is not improved with the throughput.
 That is because the bottleneck is located at MAC, distributed coordination function (DCF), which is the foundation of 802.11 MAC.
-DCF is a random access mechanism. Details of DCF could be referd to \cite{bianchi2000performance}.
+DCF is a random access mechanism. Details of DCF could be referred to \cite{bianchi2000performance}.
 
-With tremendous increase of WiFi deployment, there are more and more basic service sets (BSS) overlaping with each other and each BSS has more and more devices, which will cause severe interference. 
-According to Cisco Visual Network index\cite{cisco2016}, the mobile traffic will increase 53\% at CAGR within 2015-2020, which means increase eigthfold during tht 5 years.
+With tremendous increase of WiFi deployment, there are more and more basic service sets (BSS) overlapping with each other and each BSS has more and more devices, which will cause severe interference. 
+According to Cisco Visual Network index\cite{cisco2016}, the mobile traffic will increase 53\% at CAGR within 2015-2020, which means increase eightfold during the 5 years.
 What's more, other systems, like 3GPP, also engage in WLAN in the unlicensed band called LTE-U. WLAN in the unlicensed band will become more and more dense. 
 Thus, supporting such a dense deployment remains critical to be solved. 
 
@@ -23,10 +23,10 @@ Refer to Bianchi's saturated analysis of DCF, the throughput degrades sharply wi
 We could extend Bianchi's analysis to obtain the energy performance.
 Stations have roughly three working states, "transmit", "receive" and "idle".
 Check the figure \ref{fig_part_state}, with the number of stations increases, the partition of time working in transmission for each station decreases a lot while that in receiving state increases much. 
-That means a station has much less chance to transmit. And with the decrease throughtput, we could know that most of transmissions are collided with others. 
+That means a station has much less chance to transmit. And with the decrease throughput, we could know that most of transmissions are collided with others. 
 Then let's look the energy performance by checking the figure \ref{fig_eng}. 
 We find that total energy consumption of a station increase a lot while successful transmissions are less.
-We thus could conclude that the DCF is inherently instable and is not fit for dense scenario.
+We thus could conclude that the DCF is inherently unstable and is not fit for dense scenario.
 
 \vspace*{0.5cm}
 
@@ -81,7 +81,7 @@ The unfair queueing is always there so that once the BSS becomes congested the u
 \end{figure}
 
 \section{Solution: 802.11ax}
-Previous amendments, 802.11n and 802.11ac called high throughput (HT) and very high throughput (VHT) respectively, are mainly modify PHY layer to improve throughput. 
+Previous amendments, 802.11n and 802.11ac called high throughput (HT) and very high throughput (VHT) respectively, are mainly modify PHY layer to improve throughput\cite{perahia2013next}. 
 However, this throughput is not estimated under dense scenario. 
 That's why the QoE doesn't improve with the throughput.  
 Actually, the bottleneck is located at the MAC layer.
@@ -99,14 +99,14 @@ They could be an efficient way for stations to initialize a traffic stream by se
 
 To support OFDMA UL transmission and the OFDMA-based random access, a special control frame, trigger frame (TF), is created to implement trigger-based MU UL\cite{draft_ax}. 
 Actually, the new MAC is based on DCF since it helps co-exist among BSS and other systems. The difference is that the DCF mainly works on AP which means AP needs to access channel following DCF procedure, while HE-STA (802.11ax STA) is scheduled by AP. 
-Detailed illstration of 802.11ax MAC MU feature is in chapter \ref{chp_ax_feature}.
+Detailed illustration of 802.11ax MAC MU feature is in chapter \ref{chp_ax_feature}.
 
 The OFDMA-based random access is the focus of this paper. In the following chapters, we will extend Bianchi's Markov Model to model it and propose a list of rules of configuring system parameters based on the model analysis.
 
 \section{Related Work}
 %3. related work, random acces history ? , clarify OFDMA-based random access is special
 % SU/MU; aloha/CSMA; BEB/UB; saturated/unsaturated
-Random access is one approach of multicacess sharing in data network.
+Random access is one approach of multiaccess sharing in data network.
 Inherently, collision resolution algorithms can achieve small delay with a large number of lightly loaded nodes, the stability is a major concern\cite{bertsekas1992data}\cite{chen1994medium}.  
 Random access originates from Aloha and slotted Aloha in single-user channel. 
 Then CSMA works as typical collision resolution  \cite{kleinrock1975packet}, which is modified and then accepted by IEEE 802.11, named CSMA/CA. 
@@ -143,8 +143,7 @@ Since OFDMA-based random access has dynamic and more complicated parameter sets 
 
 The thesis is organized as follows. 
 More explanations of 802.11ax features are given in section \ref{sec_MU}. In section \ref{sec_RA_illu}, a detailed illustration of OFDMA-based random access procedure is presented.
-Chapter \ref{chp_sys_model} contains the system model and derivation of two metrics, includ-
-ing system efficiency and access delay. 
+Chapter \ref{chp_sys_model} contains the system model and derivation of two metrics, including system efficiency and access delay. 
 Simulation which helps validate the system model is presented in this chapter.
 Then chapter \ref{chp_perf_eval} is the performance evaluation of optimal performance and checks the impact of system parameters on performance.
 At last rules of configuring system parameters are listed.
