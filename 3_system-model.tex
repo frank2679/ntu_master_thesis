@@ -1,14 +1,59 @@
-\chapter{System Model} 		\label{sec_sys_model}
+\chapter{System Model} 		\label{chp_sys_model}
 One of main contribution of this paper is the analytical evaluation of the saturation analysis of 802.11ax OFDMA-based random access, in the assumption of ideal channel conditions (i.e., no hidden terminals and capture). 
 The Markov chain model of random access was first proposed by Bianchi for analyzing distributed coordination function\cite{bianchi2000performance}. 
 Here, for the brand new ODFMA-based random access, we generate a new Markov chain model. 
-In this analysis, we also generate three metrics, $n_s$ number of stations who succeed in contending in a stage, \textit{eff} self-defined system efficiency, and $D$ access delay of request frame. 
+In this analysis, we generate three metrics, $n_s$ number of stations who succeed in contending in a stage, eff self-defined system efficiency, and $D$ access delay of request frame. 
 
 The analysis is divided into two parts. First is the Markov chain model to estimate the packet transmission probability $\tau$ and conditional collision probability $p$. 
 Secondly, we express the three metrics as function of $\tau$. 
 Table \ref{table_notation} is a list of all parameters and notations.
 
-\begin{table}[!h]
+Before generating Markov Chain model, we need to clarify concept of time in this mechanism.
+The OFDMA-based random access is a three-way handshake procedure, AP initiating a TF, followed with STAs' sending request, then AP reponding the request with ACK.
+The whole procedure is so-called "stage".
+Actually, we have known that in legacy 802.11 DCF, time is measured in slot, which is a unit of time.
+Here, time is measured in stage, which is a discrete time and is not synchronized with physical time. 
+Stages should be mapped with "slot" in legacy random access mechanism.
+Thus, access delay in this mechanism will be number of stages for station to access channel.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[scale=0.27]{./figure/chp3/ra_time.png}
+\caption{Concept of time in OFDMA-based random access}
+\label{fig_ra_time}
+\end{figure}
+
+
+
+\section{Packet Transmission Probability} \label{sec_model}
+Since 802.11ax implements OFDMA and trigger-based UL, 802.11ax stations won't contend with AP under this situation.
+To estimate the performance of the OFDMA-based random access mechanism, we assume a saturated condition that each station always has requests to transmit.
+In the above use case, each station will contend to send \textit{Buffer Status Report} (BSR), for convenience and easy understanding we call it request in the following context, for the data transmission later. 
+Consider a fixed number $n$ of contending stations. 
+$M$ represents the number of RU for random access in a stage. 
+
+
+Let $b(t)$ be the stochastic process representing the backoff time counter for a given station.
+A discrete and integer time scale is adopted: $t$ and $t+1$ correspond to the beginning of two consecutive stage times, and the backoff time counter of each station decrements at the beginning of each stage.
+Note that this discrete time scale does not directly relates to the physical time.
+In fact, as illustrated in figure \ref{fig_ra_time}, time interval between two consective stages is variable.
+And since the OFDMA-based random access in MU PHY is kind of Aloha random access, the backoff counter will only be frozen outside the stage period. 
+The request packet is contained in a stage, thus the time interval between two stages is just a stage, which is absolutely different with Bianchi's model.
+In Bianchi's model of DCF, the time interval between two slot time beginnings may be much longer than the slot time size, as it may include a packet transmission. 
+That's why in section \ref{sec_metric}, we could generate easy system efficiency rather than a complicate throughput as in \cite{bianchi2000performance}.
+
+Since the value of the backoff counter of each station depends also on its transmission history (e.g., how many retransmission the head-of-line packet has suffered), the stochastic process $b(t)$ is non-Markovian.
+However, define convenience $W_0=OCW_{min}$. 
+Let $m$, "maximum backoff level", be the value such that $OCW_{max}=2^mW_0$, and let's adopt the notation $W_i$, the OFDMA contention window (OCW) at $i^{th}$ backoff level, with relationship $W_i = 2W_{i-1}+1$, where $i\in (0,m)$ is called "backoff level".
+Let $s(t)$ be the stochastic process representing the backoff level $(0,...,m)$ of the station at time $t$.
+
+The key approximation in our model is that, at each transmission attempt, and regardless of the number of retransmissions suffered, each packet collides with constant and independent probability $p$. It is intuitive that this assumption results more accurate as long as $W_0$ and $n$ get larger. $p$ will be referred to as "conditional collision probility", meaning that this is the probability of a collision seen by a packet being transmitted on the channel.
+
+Once independence is assumed, and $p$ is supposed to be a constant value, the bidimensional process $\lbrace s(t),b(t) \rbrace$ could be modeled with Markov chain as in figure\ref{Markov}. 
+There mainly two differences compared with Bianchi's Markov chain.
+Firstly, since states $( i,0\sim M )$ all means station could access RU, we could merge these states into one state, denoted by $( i, T )$. 
+Secondly, at beginning of each stage, the backoff counter will decrease the value of $M$, instead of $1$, which is depicted in chapter \ref{chp_ax_feature}.
+\begin{table}[!b]
 \caption{Parameters and Notations}
 \centering
 \label{table_notation}
@@ -22,31 +67,17 @@ $p$						& packet collision probability \\
 $\tau$					& station's transmission probability \\
 $n_s$					& $\#$ of successful stations in a stage \\
 $D$			            & access delay, $\#$ of stages for a station \\ & to succeed in contending \\
-$N_{s\_stage}$			& $\#$ of stages until a successful stage \\
+$D_s$					& $\#$ of stages until a successful stage \\
 \hline
 \end{tabular}
 \end{table}
 
-\section{Packet Transmission Probability}
-Since 802.11ax implements OFDMA-MU and corresponding trigger-based UL, AP won't contend with 802.11ax stations under this situation.
-To estimate the performance of the OFDMA-based random access mechanism, we assume a saturated condition that each station always has packets to transmit as long as it accesses the channel.
-In the first use case, each station will contend to send \textit{Buffer Status Report} (BSR), for convenience and easy understanding we call it request in the following context, for the data transmission later. 
-
-With above illustration of OFDMA-based random access mechanism, a 20 MHz channel, which is a single user (SU) channel in legacy 802.11, can be divided into 9 subchannels, called resource unit (RU). Consider a fixed number $n$ of contending stations. 
-$M$ represents the number of RU for random access in a stage. 
-$W_i$ is the OFDMA contention window (OCW) at $i^{th}$ backoff level, with relationship $W_i = 2W_{i-1}+1$. Stations with OCW $W_i$ will randomly generate a backoff counter among range $[0,W_i]$.  
-
-The bidimensional process $\lbrace s(t),b(t) \rbrace$, where $s(t)$ denotes the backoff level $(0,1\cdots ,m)$ of a given station at time $t$ and $b(t)$ denotes backoff time counter (i.e., OBO) for the station, will be modeled with Markov chain as in figure\ref{Markov}. 
-Since states $\lbrace i,0\sim M \rbrace$ all means station could access RU, we could merge these states into one state, denoted by $\lbrace i, T \rbrace$. 
-
-The model is based on the assumption that at each request transmission, and regardless of the number of retransmission suffered, each request frame collides with constant and independent probability $p$.
-
-\begin{figure*}[!t]
+\begin{figure}[!t]
     \centering
-\includegraphics[scale=.45]{./figure/chp3/Markov_chain.png}
+\includegraphics[scale=.4]{./figure/chp3/Markov_chain.png}
 \caption{Markov Chain model for the backoff window size}
 \label{Markov}
-\end{figure*}
+\end{figure}
 
 Let's assume $P\lbrace i_1, k_1|i_0,k_0\rbrace = P\lbrace s(t+1) = i_1, b(t+1)= k_1|s(t) = i_0, b(t) = k_0\rbrace $. In this Markov Chain, the only non null one-step transition probabilities are 
 \begin{align}
@@ -65,7 +96,7 @@ P\lbrace m, k | m, T \rbrace = \frac{p(M+1)}{W_m+1}
 \label{trans_prob}
 \end{align}
 The first and second equations in \ref{trans_prob} accounts for the fact that in a trigger frame stage for random access, the backoff counter maintained by stations will decrease the number of RUs for random access. 
-The third and fourth equation represents that after a successful contention, stations will reset the contention window size to initial window size and uniformly generate a backoff value among $[0,W_0]$, since $T = [0,M]$, the transition probability to $\lbrace i, T \rbrace$ is $M+1$ times of that to $\lbrace i, k \rbrace$. 
+The third and fourth equation represents that after a successful contention, stations will reset the contention window size to initial window size and uniformly generate a backoff value among $[0,W_0]$, since $T = [0,M]$, the transition probability to $( i, T )$ is $M+1$ times of that to $( i, k )$. 
 For the fifth and sixth equations, they represents when a failure contention occurs, the contention window size will be doubled. 
 The last two equation is situation of failure contention at the maximum backoff level.
 
@@ -77,31 +108,30 @@ b_{m-1,T}\cdot p = (1-p) b_{m,T}	\rightarrow b_{m,T} = \frac{p^m}{1-p}b_{0,T}.
 \label{biT}
 \end{align}
 
-Then,
+Then, owing to the chain regularities, for each $k\in [T, W_i]$, it is 
 \begin{align}
-&b_{i,k} =  \nonumber \\
-&
+&b_{i,k} = 
 \begin{cases}
-(\lfloor \frac{W_0-k}{M} \rfloor+1)\frac{(1-p)}{W_0+1}\sum_{i=0}^m b_{i,T}, \  M+1\leq k\leq W_0,\ i = 0\\[3pt]
-(\lfloor \frac{W_i-k}{M} \rfloor+1)\frac{p}{W_i+1}b_{i-1,T}, 				\	 M+1 \leq k\leq W_i, \ 0<i<m \\[3pt]
-(\lfloor \frac{W_m-k}{M} \rfloor+1)\frac{p}{W_m+1} (b_{m-1,T}+b_{m,T}), 	
-\end{cases}\nonumber
-\\ &\qquad \qquad \qquad \qquad \quad \qquad \qquad M+1 \leq k\leq W_m, \quad i = m \nonumber \\
+(\lfloor \frac{W_0-k}{M} \rfloor+1)\frac{(1-p)}{W_0+1}\sum_{i=0}^m b_{i,T}, \  &M+1\leq k\leq W_0,\ i = 0\\[3pt] \nonumber
+(\lfloor \frac{W_i-k}{M} \rfloor+1)\frac{p}{W_i+1}b_{i-1,T}, 				\	& M+1 \leq k\leq W_i, \ 0<i<m \\[3pt]
+(\lfloor \frac{W_m-k}{M} \rfloor+1)\frac{p}{W_m+1} (b_{m-1,T}+b_{m,T}),  & M+1 \leq k\leq W_m, \ i = m \nonumber 	
+\end{cases}
+\\
 \label{steady_prob}
 \end{align}
 
-From equation \ref{biT}, we have $\sum_{i=0}^m b_{i,T}= \frac{b_{0,T}}{1-p}$; sum the equation \ref{steady_prob} respectively, we obtain equation \ref{part_sum}.  
+From equation \ref{biT}, we have $\sum_{i=0}^m b_{i,T}= \frac{b_{0,T}}{1-p}$; sum the equation \ref{steady_prob} respectively which means the sum of each row of states in figure \ref{Markov}, we obtain equation \ref{part_sum}.  
 
 \begin{align}
 \begin{cases}
-\sum_{k=M+1}^{W_0} b_{0,k} = \frac{b_{0,T}}{W_0+1}\left(-\frac{M}{2}\left\lfloor \frac{W_0}{M}\right\rfloor ^2 + \left(W_0-\frac{M}{2}\right)\left\lfloor \frac{W_0}{M} \right\rfloor \right) \\[8pt]
-\sum_{i=1}^{m-1}\sum_{k=M+1}^{W_i} b_{i,k} = \frac{b_{0,T}}{W_0+1}\left(\frac{p}{2}\right)^i \left(-\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\frac{M}{2}\right)\left\lfloor \frac{W_i}{M} \right\rfloor \right) \\[8pt]
+\sum_{k=M+1}^{W_0} b_{0,k} = \frac{b_{0,T}}{W_0+1}\left(-\frac{M}{2}\left\lfloor \frac{W_0}{M}\right\rfloor ^2 + \left(W_0-\frac{M}{2}\right)\left\lfloor \frac{W_0}{M} \right\rfloor \right) \\[3pt]
+\sum_{i=1}^{m-1}\sum_{k=M+1}^{W_i} b_{i,k} = \frac{b_{0,T}}{W_0+1}\left(\frac{p}{2}\right)^i \left(-\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\frac{M}{2}\right)\left\lfloor \frac{W_i}{M} \right\rfloor \right) \\[3pt]
 \sum_{k=M+1}^{W_m} b_{m,k} = \frac{b_{0,T}}{W_0+1}\frac{(\frac{p}{2})^m}{1-p}\left(-\frac{M}{2}\left\lfloor \frac{W_m}{M}\right\rfloor ^2 + \left(W_m-\frac{M}{2}\right)\left\lfloor \frac{W_m}{M} \right\rfloor \right) 
 \end{cases}
 \label{part_sum}
 \end{align}
 
-Let $X_i = -\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\frac{M}{2}\right)\left\lfloor \frac{W_i}{M} \right\rfloor$. Then we sum all the states to have equation \ref{total_sum2}.
+For convenience, let $X_i = -\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\frac{M}{2}\right)\left\lfloor \frac{W_i}{M} \right\rfloor$. Then we are capable of summing all the states to have equation \ref{total_sum2}.
 \begin{align}
 1 &= \sum_{i=0}^m \sum_{k=0}^{W_i}b_{i,k} 
  = \frac{b_{0,T}}{W_0+1}\left( X_0 + \sum_{i=1}^{m-1}X_i\left( \frac{p}{2}\right)^i + X_m\frac{\left( \frac{p}{2}\right)^m}{1-p}\right) + \frac{b_{0,T}}{1-p}\label{total_sum}\\
@@ -109,26 +139,31 @@ Let $X_i = -\frac{M}{2}\left\lfloor \frac{W_i}{M}\right\rfloor ^2 + \left(W_i-\f
 \end{align}
 
 We can now express $\tau$, the probability of a station transmit a request at a randomly selected stage.
+As any transmission occurs when the backoff time counter is equal to zero, regardless of the backoff level, it is
 
 \begin{align}
 \label{tau_general}
-&\tau = \sum_{i=0}^m b_{i,T} = \frac{b_{0,T}}{1-p} = \nonumber \\
-&\frac{W_0+1}{W_0+1+(1-p)X_0+(1-p) \sum_{i=1}^{m-1}X_i\left( \frac{p}{2}\right)^i+X_m\left( \frac{p}{2}\right)^m}
+\tau &= \sum_{i=0}^m b_{i,T} = \frac{b_{0,T}}{1-p}  \nonumber \\
+ &=\frac{W_0+1}{W_0+1+(1-p)X_0+(1-p) \sum_{i=1}^{m-1}X_i\left( \frac{p}{2}\right)^i+X_m\left( \frac{p}{2}\right)^m}
 \end{align}
 
-For $m=0$, check equation \ref{total_sum}, the terms containing $X_i, i>0$ will disappear, and $b_{0,T}/(1-p)$ will just be $b_{0,T}$.
-Thus, equation \ref{total_sum2} will be simplified to 
+As a side note, it is interesting to highlight that, when $m=0$ (i.e., no exponential backoff is considered), check equation \ref{total_sum}, the terms containing $X_i, i>0$ will disappear, and $b_{0,T}/(1-p)$ will just be $b_{0,T}$.
+Thus, equation \ref{total_sum2} will be degraded to 
 \begin{align}
 1 = b_{0,T}\left( \frac{W_0+1+X_0}{W_0+1}\right),
 \end{align}
-thereby, 
+further simplified that $M=1$ and $X_0=\frac{W_0^2-W_0}{2}$, then
 \begin{align}
-\tau = b_{0,T} = \frac{W_0+1}{W_0+1+X_0}.
+\tau = b_{0,T} &= \frac{W_0+1}{W_0+1+X_0} \nonumber\\
+			   &= \frac{2(W_0+1)}{W_0^2+W_0+2},
 \label{tau_W0}
 \end{align}
-Thus $\tau$ is independent with $n$, number of contending stations.
+which is different from \cite{ho1996performance} since the OFDMA-based random access is Aloha-like not CSMA-like random access. 
+Whatever, the probability $\tau$ results to be independent of $p$.
 
-On the other hand, conditional collision probability $p$ is the probability that no other stations select the same RU to transmit request. So we have 
+On the other hand, in general, $\tau$ depends on the conditional collision probability $p$, which is still unknown. To find the value of $p$ it is sufficient to note that the probability $p$ that a transmitted packet encounters a collisions, is the probability that, in a stage, at least one of the $n-1$ remaining stations transmit on the selected RU. 
+The fundamental independence assumption given above implies that each transmission "sees" the system in the same state, i.e., the steady state. 
+At steady state, each remaining station transmits a packet with probability $\tau$. This yields 
 \begin{align}
 \label{p_ax}
 p = 1-\left( 1-\frac{\tau}{M} \right)^{n-1}.
@@ -143,14 +178,14 @@ And $\tau(1) < \tau^\star(1) = M$. We find the only solution with numerical meth
 
 
 
-\section{Random Access Efficiency}
+\section{Random Access Efficiency} \label{sec_metric}
 With the transmit probability, we could easily estimate efficiency of random access mechanism. 
 Firstly, find expected number of stations who succeed in contending to transmit request at a stage, which is denoted with $E[n_s]$. 
 Extending $n_s$, we define a system efficiency as an important metric.
 Secondly, we are interested in the access delay of request frame. 
 In another word, say how many stages needed for a station to succeed in contending, denoted by $D$.
-What's more, another interesting metric is how many stages are elapsed until a successful stage, which means at least one station succeed in contending in the stage. This metric is a concept similar to "delay" in the second use case of OFDMA-based random access. We represent it with $N_{s\_stage}$. It helps design whole MU UL transmission procedure. 
-Here, our concern is mainly on first two metrics which are purely related to random access procedure. The third metric is only expressed in the subsection of access delay, not being discussed later. 
+What's more, another interesting metric is how many stages are elapsed until a successful stage, which means at least one station succeed in contending in the stage. This metric is a concept similar to "delay" in the second use case of OFDMA-based random access. We represent it with $D_s$. It helps design whole MU UL transmission procedure. 
+Here, our concern is mainly on $n_s$, system efficiency and access delay all of which are purely related to random access procedure. The other metric $D_s$ is only expressed in the subsection of access delay, not being discussed later. 
 
 \subsection{$n_s$ and System Efficiency}
 What we care in the random access is that how many stations contend successfully in a single stage, denoted by $n_s$.
@@ -163,7 +198,7 @@ E[n_s] &= n P_{s\_station} \nonumber \\
 		&= n\tau (1-\frac{\tau}{M})^{n-1}
 \end{align}
 
-Furthermore, normalizing $n_s$, system efficiency here is defined as 
+Furthermore, normalizing $n_s$ so that we could compare among different $M$, thus system efficiency is defined as 
 \begin{align}
 \label{eff_def}
 \textit{eff}\ (\tau) &= \frac{E[\text{number of successful stations in a given stage}]}{\text{number of RUs for random access in a stgae}} \nonumber\\
@@ -176,14 +211,17 @@ With all these metrics, we could evaluate the performance later.
 
 	
 \subsection{Access Delay}
-$D$, the random variable of how many stages are needed for a station to succeed in contending in a stage follows geometric distribution with parameter $P_{s\_station}$, which is obtained just now.  
-Then the expected value of access delay of request frame, $E[D]$, is 
+Access delay $D$ is defined as number of stages needed for a station to succeed in contending.  
+This access delay is different from legacy access delay since the concept of time here is not corresponding with phsical time.
+We measure the time as number of stages.
+Access delay $D$ follows geometric distribution with parameter $P_{s\_station}$, which is obtained just now.
+Thus the expected value of access delay of request frame, $E[D]$, is 
 \begin{align}
 \label{equ_delay}
 E[D] = \frac{1}{P_{s\_{station}}} = \frac{1}{\tau (1-\frac{\tau}{M})^{n-1}}.
 \end{align}
 
-Then another interesting metric which is not our focus, denoted by $N_{s\_stage}$, that how many stages are elapsed until a successful stage. 
+Then another interesting metric which is not our focus, denoted by $D_s$, that how many stages are elapsed until a successful stage. 
 We could firstly obtain $P_{s\_stage}$, the probability of a successful stage, which means at least one station succeed in contending in the stage.
 
 \begin{align}
@@ -191,9 +229,9 @@ P_{s\_stage} &= 1-P\lbrace n_s = 0\rbrace \nonumber \\
 	&= 1-(1-P_{s\_station})^n \nonumber\\
 	&= 1-(1-\tau(1-p))^n
 \end{align} 	 
-Since $N_{s\_stage}$ follows geometric distribution with parameter $P_{s\_stage}$,  
+Since $D_s$ follows geometric distribution with parameter $P_{s\_stage}$,  
 \begin{align}
-E[N_{s\_stage}] &= \frac{1}{P_{s\_stage}}  \nonumber \\
+E[D_s] &= \frac{1}{P_{s\_stage}}  \nonumber \\
 			&= \frac{1}{1-(1-\tau(1-p))^n}
 \end{align} 
 
@@ -202,10 +240,11 @@ Actually, only two variables are concerned, $n_s$ and $D$. However, $n_s$ and it
 
 
 \section{Model Validation} 		\label{sec_model_val}
-To validate the Markov chain model, we run a simulation using C language according to the settings of 802.11ax random access illustration. 
-We run the simulation with variety of parameter sets $\lbrace M, m, OCW_{min}\rbrace$ and collects the information of the two variables, $n_s$ and $D$. 
-The validation is given in both figure \ref{validation} and table \ref{table_val}. 
-The results show that the Markov model precisely predict the behavior of the OFDMA-based random access.
+To validate the Markov chain model, we run a simulation using C language according to the settings as in section \ref{sec_RA_illu}. 
+We run the simulation with variety of parameter sets $\lbrace M, OCW_{min}, OCW_{max}\rbrace$ and collects the information of the two variables, $n_s$ and $D$. 
+The values of results from both analysis and simulation are given in figure \ref{validation} and table \ref{table_val}. 
+All simulation results are obtained from a long-run simulation.
+The results show that the Markov model precisely predict the steady state behavior of the OFDMA-based random access.
 \begin{table}[!h]
 \caption{Analysis versus simulation: $n_s$ and access delay with $m=3,M=9,OCW_{min} = 15$}
 \label{table_val}

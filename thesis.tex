@@ -6,9 +6,10 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{array}
-\usepackage{wallpaper} 
+\usepackage{wallpaper}
 \usepackage{amsmath}
 \usepackage{subcaption} % for subfigures
+\usepackage{url} % for url citation
 
 
 % Using the tex-text mapping for ligatures etc.
@@ -19,7 +20,7 @@
 \setCJKmainfont{kaiu.ttf}
 
 \ifdefined\withwatermark
-  \CenterWallPaper{0.174}{./watermark.pdf}
+  \URCornerWallPaper{1.0}{./watermark.pdf}
   \setlength{\wpXoffset}{6.1725cm}
   \setlength{\wpYoffset}{10.5225cm}
 \fi
@@ -28,8 +29,7 @@
 \input{ntuvars}
 
 \begin{document}
-\AddToShipoutPictureBG{\put(\LenToUnit{.325\paperwidth},\LenToUnit{.35\paperheight}){\includegraphics[scale=1]{watermark.pdf}}}
-
+\AddToShipoutPictureBG{\put(\LenToUnit{.325\paperwidth},\LenToUnit{.35\paperheight}){\includegraphics[scale=1.0]{watermark.pdf}}}
 \frontmatter
 
 \makecover

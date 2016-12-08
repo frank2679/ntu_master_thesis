@@ -1,10 +1,8 @@
-\chapter{Conclusion}   \label{sec_conclu}
-In this paper, we illustrate one of important features of the IEEE 802.11ax MAC, OFDMA-based random access. 
-Different from legacy 802.11, the OFDMA-based random access mechanism is more complicated and flexible, not only multiple channels being allocated for random access, but also the parameter set being configured by AP in real time.
-We generate a new Markov chain model of the OFDMA-based random access and validate our model by simulation. 
+\chapter{Conclusion}   \label{chp_conclu}
+In this thesis, we expose bottleneck of legacy 802.11---a SU random access for its unstability property. 
+Then we illustrate OFDMA-based random access which is MU random access in IEEE 802.11ax MAC. 
+And the dynamic configuration of parameters makes it more flexible and more complicated. 
 
-With the model, we derive the maximum system efficiency and minimum access delay, and estimate the effect of a parameter set $\lbrace M, m, OCW_{min} \rbrace$ on system efficiency and access delay, where $M$ is the number of RUs for random access, $m$ is the maximum backoff levels, and $OCW_{min}$ is the initial OFDMA contention window. 
-All the three parameters have great impact on performance.
-An interesting result is that the maximum system efficiency and minimum access delay are obtained by the same transmission probability $\tau$, which is given by $\tau^\star = min \lbrace 1,M/n\rbrace$. 
-Then rules of configuration of parameter set aimed at reaching the optimal transmission probability $\tau^\star$ is proposed for AP according to system state, mainly the number of contending stations. 
-The last group cases of various parameter sets validates our proposed rules.
+Afterwards, we extend Bianchi's Markov chain model of DCF to model the OFDMA-based random access for its simplicity and accuracy. We also validate our model by simulation. 
+With the model, we could estimate the impact of a parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ on system efficiency and access delay, where $M$ is the number of RUs for random access,  and $OCW_{min}, OCW_{max}$ is the initial and maximum OFDMA contention window. 
+At last, rules of configurating the parameter set aimed at approaching the optimal transmission probability $\tau^\star$ is proposed for AP with or without given number of contending stations.

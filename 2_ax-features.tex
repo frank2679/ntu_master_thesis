@@ -1,9 +1,9 @@
-\chapter{802.11ax Features}			\label{sec_ax_feature}
+\chapter{802.11ax Features}			\label{chp_ax_feature}
 The legacy random access is called distributed coordination function (DCF). 
 Since the DCF degrades performance severely at dense scenario solution, IEEE 802.11ax proposes a centralized coordination, improving the status of AP. 
 This centralized coordination function is also based on DCF so that 802.11ax is compatible with legacy 802.11 and other wireless system. 
 At the same time, OFDMA is issued in IEEE 802.11ax to improve the system performance. In this section, we introduce MU PHY and TF-based MU UL.
-\section{Multi-User PHY}
+\section{Multi-User PHY} \label{sec_MU}
 \subsection{PHY}
 While legacy 802.11 specify a 20 MHz channel a Single User (SU) channel, which means only one user could access the channel at a time in a BSS, 802.11ax issues a flexible resource allocation based on OFDMA, allowing multiple STAs to access channel simultaneously.
 It should help mitigate contention and collision. 
@@ -79,14 +79,14 @@ What's more, to support scheduling of TF, a mechanism called \textit{Target Wake
 %\end{minipage}
 
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
 \includegraphics[scale=0.35]{./figure/chp2/RA_illu_2.png}
-\caption{An example of OFDMA-based random access for UL in 802.11ax }
+\caption{An example of OFDMA-based random access for UL in 802.11ax}
 \label{fig_ra_ul}
-\end{figure*}
+\end{figure}
 
-As stated above, legacy IEEE 802.11 MAC is a 20MHz SU PHY, which means that at most single user could succeed in contending at a time slot.
+As stated above, legacy IEEE 802.11 MAC is a 20 MHz SU PHY, which means that at most single user could succeed in contending at a time slot.
 With the MU PHY, HE-STA (802.11ax, high efficient station) has multiple RUs to access, which means multiple HE-STAs may access channel at the same time.
 And the parameter set is set by AP in real time.
 The procedure is of course more complicated and flexible.
@@ -119,7 +119,7 @@ The value is defined by $OCW_{min} = 2^{EOCW_{min}}-1$, $OCW_{max} = 2^{EOCW_{ma
 In the following analysis, we issue another parameter $m$, maximum backoff level, $OCW_{max} = (OCW_{min}+1)*2^m-1$. So we specify $OCW_{max}$ with $m$ and $OCW_{min}$ in following section, which helps analysis.
 
 
-Following are two use cases of OFDMA-based random access. 
+Following is a use case of OFDMA-based random access. 
 One is as figure \ref{fig_ra_ul} for UL random access. 
 When HE-STA wants to random access to transmit data packets, he will send buffer state report (BSR) frame with OFDMA-based random access. 
 After successful contention, AP will allocate RUs for the HE-STA by trigger frame. 
