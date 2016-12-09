@@ -1,12 +1,33 @@
 \chapter{System Model} 		\label{chp_sys_model}
-One of main contribution of this paper is the analytical evaluation of the saturation analysis of 802.11ax OFDMA-based random access, in the assumption of ideal channel conditions (i.e., no hidden terminals and capture). 
+One of main contribution of this thesis is the analytical evaluation of the saturation analysis of 802.11ax OFDMA-based random access, in the assumption of ideal channel conditions (i.e., no hidden terminals and capture). 
 The Markov chain model of random access was first proposed by Bianchi for analyzing distributed coordination function\cite{bianchi2000performance}. 
+However, DCF is CSMA-like random access while OFDMA-based random access is an Aloha-like random access.
+Fortunately, the Markov chain model mainly model the backoff mechanism, so it could be modified not much to model the Aloha-like OFDMA-based random access.
 Here, for the brand new OFDMA-based random access, we generate a new Markov chain model. 
 In this analysis, we generate three metrics, $n_s$ number of stations who succeed in contending in a stage, eff self-defined system efficiency, and $D$ access delay of request frame. 
 
 The analysis is divided into two parts. First is the Markov chain model to estimate the packet transmission probability $\tau$ and conditional collision probability $p$. 
 Secondly, we express the three metrics as function of $\tau$. 
 Table \ref{table_notation} is a list of all parameters and notations.
+
+\begin{table}[!b]
+\caption{Parameters and Notations}
+\centering
+\label{table_notation}
+\begin{tabular}{c|l}
+\hline
+$n$						& $\#$ of stations \\
+$OCW_{min}$ or $W_0$		& minimum OFDMA contention window \\
+$M$						& $\#$ of RUs for random access \\
+$m$						& maximum backoff level \\
+$p$						& packet collision probability \\
+$\tau$					& station's transmission probability \\
+$n_s$					& $\#$ of successful stations in a stage \\
+$D$			            & access delay, $\#$ of stages for a station \\ & to succeed in contending \\
+$D_s$					& $\#$ of stages until a successful stage \\
+\hline
+\end{tabular}
+\end{table}
 
 Before generating Markov Chain model, we need to clarify concept of time in this mechanism.
 The OFDMA-based random access is a three-way handshake procedure, AP initiating a TF, followed with STAs' sending request, then AP responding the request with ACK.
@@ -53,24 +74,6 @@ Once independence is assumed, and $p$ is supposed to be a constant value, the bi
 There mainly two differences compared with Bianchi's Markov chain.
 Firstly, since states $( i,0\sim M )$ all means station could access RU, we could merge these states into one state, denoted by $( i, T )$. 
 Secondly, at beginning of each stage, the backoff counter will decrease the value of $M$, instead of $1$, which is depicted in chapter \ref{chp_ax_feature}.
-\begin{table}[!b]
-\caption{Parameters and Notations}
-\centering
-\label{table_notation}
-\begin{tabular}{c|l}
-\hline
-$n$						& $\#$ of stations \\
-$OCW_{min}$ or $W_0$		& minimum OFDMA contention window \\
-$M$						& $\#$ of RUs for random access \\
-$m$						& maximum backoff level \\
-$p$						& packet collision probability \\
-$\tau$					& station's transmission probability \\
-$n_s$					& $\#$ of successful stations in a stage \\
-$D$			            & access delay, $\#$ of stages for a station \\ & to succeed in contending \\
-$D_s$					& $\#$ of stages until a successful stage \\
-\hline
-\end{tabular}
-\end{table}
 
 \begin{figure}[!t]
     \centering

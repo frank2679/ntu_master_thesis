@@ -1,8 +1,11 @@
 \chapter{Conclusion}   \label{chp_conclu}
-In this thesis, we expose bottleneck of legacy 802.11---a SU random access for its instability property. 
-Then we illustrate OFDMA-based random access which is MU random access in IEEE 802.11ax MAC. 
-And the dynamic configuration of parameters makes it more flexible and more complicated. 
+In this thesis, we first expose that the bottleneck of legacy 802.11 is located at its MAC, instability of DCF and unfair queueing problem. 
+Then we introduce 802.11ax as a solution which aimed at high efficient WLAN (HEW).
+One of the important features of 802.11ax is OFDMA-based random access, which is MU random access in IEEE 802.11ax MAC. 
+The system parameters are configured by AP dynamically, so it is more flexible and more complicated. 
 
-Afterwards, we extend Bianchi's Markov chain model of DCF to model the OFDMA-based random access for its simplicity and accuracy. We also validate our model by simulation. 
-With the model, we could estimate the impact of a parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ on system efficiency and access delay, where $M$ is the number of RUs for random access,  and $OCW_{min}, OCW_{max}$ is the initial and maximum OFDMA contention window. 
+Afterwards, we extend Bianchi's Markov chain model of DCF to model the OFDMA-based random access for its simplicity and accuracy. 
+With the model we do saturation analysis to depict the steady state behavior of the mechanism.
+Simulation validates the model. 
+Then we could estimate the impact of a parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ on system efficiency and access delay, where $M$ is the number of RUs for random access,  and $OCW_{min}, OCW_{max}$ is the initial and maximum OFDMA contention window. 
 At last, rules of configuration of the parameter set aimed at approaching the optimal transmission probability $\tau^\star$ is proposed for AP with or without given number of contending stations.
