@@ -1,11 +1,25 @@
-\chapter{Conclusion}   \label{chp_conclu}
-In this thesis, we first expose that the bottleneck of legacy 802.11 is located at its MAC, instability of DCF and unfair queueing problem. 
+\chapter{Conclusion and Future work}   \label{chp_conclu}
+In this thesis, we first state that WiFi is confronting dense scenario in recent and future years.
+We also expose the bottleneck located at its MAC, instability of DCF and unfair queueing problem. 
 Then we introduce 802.11ax as a solution which aimed at high efficient WLAN (HEW).
 One of the important features of 802.11ax is OFDMA-based random access, which is MU random access in IEEE 802.11ax MAC. 
 The system parameters are configured by AP dynamically, so it is more flexible and more complicated. 
 
-Afterwards, we extend Bianchi's Markov chain model of DCF to model the OFDMA-based random access for its simplicity and accuracy. 
+Afterwards, we extend Bianchi's Markov chain model to model the OFDMA-based random access for its simplicity and accuracy. 
 With the model we do saturation analysis to depict the steady state behavior of the mechanism.
 Simulation validates the model. 
 Then we could estimate the impact of a parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ on system efficiency and access delay, where $M$ is the number of RUs for random access,  and $OCW_{min}, OCW_{max}$ is the initial and maximum OFDMA contention window. 
-At last, rules of configuration of the parameter set aimed at approaching the optimal transmission probability $\tau^\star$ is proposed for AP with or without given number of contending stations.
+We have shown that, 
+\begin{itemize}
+\item System efficiency and access delay behave consistent with each other. When one of them is approching optimal, the other is also approaching optimal.
+\item And they strongly depend on the parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ and the number of stations in the BSS. 
+	\begin{itemize}
+	\item The larger $M$ is better, whatever $n$ the number of stations is. 
+	\item The $OCW_{min}$ mainly has an affect when number of stations is small, namely $n\leq 	M$. And small $OCW_{min}$ is better.
+	\item The $OCW_{max}$ counts when number of stations is large, namely $n\geq M$. And large 	$OCW_{max}$ is better.
+	\item Especially for $n \leq M$, let $OCW_{max}=OCW_{min}\leq M$, which means station will 	transmit a request at each stage with probability $1$, is the optimal configuration.
+	\end{itemize}
+\end{itemize}
+
+All above analysis is the steady state behavior of the OFDMA-based random access. We could only obtain a rough insight of the mechanism.
+However, since the random access of 802.11ax is configured dynamically by AP, instead of pre-set on hardware of stations, an analysis of transient behavior and estimation of number contending stations are required in the future so that we could generate a dynamic algorithm of configuring system parameters.

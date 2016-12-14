@@ -10,13 +10,14 @@
 \usepackage{amsmath}
 \usepackage{subcaption} % for subfigures
 \usepackage{url} % for url citation
+\usepackage{booktabs}
 
 
 % Using the tex-text mapping for ligatures etc.
 \defaultfontfeatures{Mapping=tex-text}
 
 % Set the default fonts
-\setmainfont{times.ttf}
+%\setmainfont{times.ttf}
 \setCJKmainfont{kaiu.ttf}
 
 \ifdefined\withwatermark
@@ -29,14 +30,14 @@
 \input{ntuvars}
 
 \begin{document}
-\AddToShipoutPictureBG{\put(\LenToUnit{.325\paperwidth},\LenToUnit{.35\paperheight}){\includegraphics[scale=1.0]{watermark.pdf}}}
+%\AddToShipoutPictureBG{\put(\LenToUnit{.325\paperwidth},\LenToUnit{.35\paperheight}){\includegraphics[scale=1.0]{watermark.pdf}}}
 \frontmatter
 
 \makecover
 
-\makecertification
+%\makecertification
 
-\input{acknowledgements}
+%\input{acknowledgements}
 \input{abstract}
 
 \tableofcontents
@@ -51,18 +52,13 @@
 \input{3_system-model}
 \input{4_performance-valuation}
 \input{5_conclusion}
-%\input{related}
-%\input{photoshoot}
-%\input{modeling}
-%\input{application}
-%\input{conclusion}
 
 \appendix
 
 \backmatter
 
 \addcontentsline{toc}{chapter}{\bibname}
-\bibliographystyle{abbrv}
+\bibliographystyle{IEEEtran}
 
 % Your bibliography goes here
 \bibliography{thesis}

@@ -46,7 +46,7 @@ According to equation \ref{tau_general} and \ref{p_ax}, transmission probability
 The only way to approach optimal performance is to employ adaptive techniques to tune the system parameter set $\lbrace M, W_0, W_m \rbrace$ on the basis of the estimated value of $n$.
 In the following section, we will evaluate the performance corresponding to different system parameters sets and propose the rules to tune the system parameter sets so that the transmission probability $\tau$ approach the optimal transmission probability, $\tau^\star$, which means both system efficiency and delay approach the optimal. 
 
-\section{Rules of Parameter Configuration} 	\label{sec_perf_eval}
+\section{Effects of System Parameter} 	\label{sec_perf_eval}
 We have estimated the maximum system efficiency and minimum access delay in the previous section. Then we evaluate the metrics, $n_s$ (number of stations who succeed in contending in a stage), system efficiency and $D$ (access delay), under various parameter sets. 
 With above analysis, we could evaluates transmission probability under various parameter sets, since the optimal transmission probability $\tau^\star$ means both maximum system efficiency and minimal access delay.
 
@@ -63,26 +63,26 @@ For larger $M$, the optimal number of stations is larger, given by $M/n$. It is 
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=.85]{./figure/n_M_eff_perf.png}
-\caption{System efficiency versus number of stations}
+\includegraphics[scale=.85]{./figure/chp4/n_M_eff_perf.png}
+\caption{Analysis: System efficiency versus number of stations}
 \label{fig_n_M_eff}
 \end{figure}
 
 \begin{figure}[!h]
 \begin{subfigure}{\textwidth}  
 \centering
-\includegraphics[scale=.85]{./figure/n_M_ns_perf.png}
+\includegraphics[scale=.85]{./figure/chp4/n_M_ns_perf.png}
 \caption{Number of successful stations in a single stage versus number of stations}
 \label{fig_n_M_ns}
 \end{subfigure}
 
 \begin{subfigure}{\textwidth}  
 \centering
-\includegraphics[scale=.85]{./figure/n_M_delay_perf.png}
+\includegraphics[scale=.85]{./figure/chp4/n_M_delay_perf.png}
 \caption{Access delay versus number of stations}
 \label{fig_n_M_delay}
 \end{subfigure}
-\caption{Configure $M$}
+\caption{Analysis: Configure $M$}
 \end{figure}
 
 In figure \ref{fig_n_M_delay}, the larger $M$ will linearly decrease the access delay of station. The figure is consistent with the equation \ref{equ_min_delay}. 
@@ -120,10 +120,30 @@ However, we could find the rules by checking a variety of parameter sets.
 \label{fig_tau_n_M18}
 \end{subfigure}
 %caption
-\caption{Transmission probability versus number of stations}
+\caption{Analysis: Transmission probability versus number of stations}
 \label{fig_tau_n}
 \end{figure}
 
+% figures
+\begin{figure}[!h]
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[scale=.85]{./figure/chp4/M9/n_tau_perf_M9_x100.png}
+\caption{Case 1, given $M=9$}
+\label{fig_tau_n_M9_detail}
+\end{subfigure}
+
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[scale=.85]{./figure/chp4/M18/n_tau_perf_M18_x100.png}
+\caption{Case 1, given $M=18$}
+\label{fig_tau_n_M18_detail}
+\end{subfigure}
+
+\caption{Analysis: Details of transmission probability versus number of stations when $n\leq 100$}
+\label{fig_tau_n_detail}
+\end{figure}
 Figure \ref{fig_tau_n} shows case 1 ($M=9$) and case 2 ($M=18$), from both of which we could generalize some rules between $\tau$ and parameters $OCW_{min}, OCW_{max}$.
 In the figure, the purple line without point is the optimal $\tau$, which is given according to $\tau^\star = min\lbrace 1, M/n \rbrace$.
 As stated above, we need to find a tuning of $OCW_{min}, OCW_{max}$ so that $\tau$ approaches the optimal line. The rules are listed following.
@@ -145,26 +165,7 @@ When $m=0$, $\tau$ will not change with $n$, which is consistent with equation \
 For those $m>0$, the curve will be convex. It is intuitive that with the number of stations increasing, the collision probability will increase, thus contention window increase. 
 
 
-% figures
-\begin{figure}[!t]
-\centering
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[scale=.85]{./figure/chp4/M9/n_tau_perf_M9_x100.png}
-\caption{Case 1, given $M=9$}
-\label{fig_tau_n_M9_detail}
-\end{subfigure}
 
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[scale=.85]{./figure/chp4/M18/n_tau_perf_M18_x100.png}
-\caption{Case 1, given $M=18$}
-\label{fig_tau_n_M18_detail}
-\end{subfigure}
-
-\caption{Details of transmission probability versus number of stations when $n\leq 100$}
-\label{fig_tau_n_detail}
-\end{figure}
 
 Then, we draw two figures with x axis range $[0,100]$ to find more rules as in figure \ref{fig_tau_n_detail}. 
 From the two figures \ref{fig_tau_n_M9_detail} and \ref{fig_tau_n_M18_detail} we find another rule that if $W_0=1$ which is the minimum value, there will be a flat start of $\tau$.
@@ -193,7 +194,7 @@ Afterwards, in the next two subsections, we check the system efficiency and acce
 \caption{Access delay versus number of stations}
 \label{fig_n_delay_Wm}
 \end{subfigure}
-\caption{Example of Configuring $OCW_{max}$, given $M=9$}
+\caption{Analysis: Example of Configuring $OCW_{max}$, given $M=9$}
 \end{figure}
 
 With above rough rules, we estimate the effects of $OCW_{max}$ first by setting different $OCW_{max}$ while given $OCW_{min}=1$ and $M=9$.
@@ -225,7 +226,7 @@ Therefore, we have a rule that the larger $OCW_{max}$, the better.
 \caption{Access delay versus number of stations}
 \label{fig_n_delay_W0}
 \end{subfigure}
-\caption{Example of Configuring $OCW_{min}$, given $M=18$}
+\caption{Analysis: Example of Configuring $OCW_{min}$, given $M=18$}
 \end{figure}
 
 Similarly, to estimate the relationship between performance and $OCW_{min}$, we compare the performance between different $OCW_{min}$ while given fixed $OCW_{max}=1023$, which has been validated that large $OCW_{max}$ is better, and $M=18$. 
@@ -240,15 +241,10 @@ However, larger $OCW_{max}$ smaller $OCW_{min}$ is closely approach to optimal p
 \subsection{Rules for configuring $\lbrace M, OCW_{min}, OCW_{max} \rbrace$}
 Above two previous subsections, we could conclude rules of configuring the parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$ for obtaining best performance for all $n$. 
 \begin{itemize}
-\item[Rule 1] Large $M$
-\item[Rule 2] $OCW_{min}, OCW_{max}$
-	\begin{itemize}
-	\item small $OCW_{min}$ and large $OCW_{max}$
-	\item If given $n\leq M$
-	\begin{itemize}
-		\item $OCW_{max}=OCW_{min}<M$
-	\end{itemize}
-	\end{itemize}
+\item Large $M$ regardness of number of contending stations
+\item The $OCW_{min}$ mainly has an affect when number of stations is small, namely $n\leq 	M$. And small $OCW_{min}$ is better.
+\item The $OCW_{max}$ counts when number of stations is large, namely $n\geq M$. And large 	$OCW_{max}$ is better.
+\item Especially for $n \leq M$, let $OCW_{max}=OCW_{min}\leq M$, which means station will 	transmit a request at each stage with probability $1$, is the optimal configuration.
 \end{itemize}
 
 %After we propose the rules of configuring the parameter set $\lbrace M, OCW_{min}, OCW_{max} \rbrace$, we run another analysis with typical group parameter sets which validate our rules.
